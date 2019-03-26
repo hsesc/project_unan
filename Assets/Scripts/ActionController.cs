@@ -44,7 +44,7 @@ public class ActionController : MonoBehaviour
         {
             
             CanPickup();    //물체를 들 수 있는 함수
-            //CanOpen();
+            UseItem();
 
         }
         if (Input.GetKeyDown(KeyCode.Q))
@@ -136,8 +136,12 @@ public class ActionController : MonoBehaviour
         actionText.gameObject.SetActive(true);
         actionText.text = "문을 열려면" + "<color=yellow>" + "(E)" + "</color>";
     }
-    private void Drop()
+    private void UseItem()
     {
+        if (this.transform.GetChild(0).gameObject != null)
+        {
 
+        }
+        else actionText.text = "손에 아이템이 읎어요";
     }
 }
