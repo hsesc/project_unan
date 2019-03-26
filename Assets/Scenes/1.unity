@@ -137,7 +137,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 307767691}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 530, y: 232, z: 0}
+  m_LocalPosition: {x: 599, y: 238, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1392420149}
@@ -580,8 +580,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.87747306, z: 10.189507}
-  m_Center: {x: 0, y: 0.061263468, z: 0.30631638}
+  m_Size: {x: 3.2293155, y: 0.87747306, z: 10.189507}
+  m_Center: {x: -0.08321877, y: 0.061263468, z: 0.30631638}
 --- !u!33 &1270224844
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -749,7 +749,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 633f4bbdff818b0428b9ce7efaaa975f, type: 3}
       propertyPath: m_TagString
-      value: item
+      value: key
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 633f4bbdff818b0428b9ce7efaaa975f, type: 3}
@@ -974,7 +974,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1963592517}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

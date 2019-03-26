@@ -13,7 +13,7 @@ public class ActionController : MonoBehaviour
 
     private RaycastHit hitinfo; // 충돌체 정보 저장
 
-    private GameObject pickHere; //소지품
+    private GameObject inHand; //소지품
 
     //아이템 레이어에만 반응하도록 레이어마스크 설정
     [SerializeField]            
@@ -35,7 +35,7 @@ public class ActionController : MonoBehaviour
     void Update()
     {
         TryAction();        //행동의 함수
-       // HoldAction();       //물체를 들고 있는 함수
+
     }
     private void TryAction()
     {
@@ -56,36 +56,51 @@ public class ActionController : MonoBehaviour
   
     private void CanPickup()
     {
-        if(hitinfo.transform.tag == "item")
+        if (got == false)
         {
-            if (got == false)
+            if (hitinfo.transform.tag == "item")            //집을 물건이 item태그를 가질 경우
             {
                 if (pickupActivated)
                 {
                     if (hitinfo.transform != null)
                     {
 
-                        GameObject child = hitinfo.transform.gameObject;
+                        inHand = hitinfo.transform.gameObject;
                         Debug.Log("획득했습니다.");
                         /*Destroy(hitinfo.transform.gameObject);
                         InfoDisappear();*/
 
-                        child.transform.parent = this.transform;
-                        //pickHere = child;
-                        //child.transform.rotation = new Quaternion(0, 0, 0, 0);
+                        inHand.transform.parent = this.transform;
                         got = true;
-                        child.GetComponent<Rigidbody>().useGravity = false;
-                        child.GetComponent<BoxCollider>().isTrigger = true;
-                        child.transform.localPosition = new Vector3( 0, 0,1 );
+                        inHand.GetComponent<Rigidbody>().useGravity = false;
+                        inHand.GetComponent<BoxCollider>().isTrigger = true;
+                        inHand.transform.localPosition = new Vector3(1, 0, 1);
+                        inHand.transform.localRotation = new Quaternion(0, 0, 0, 0);
                     }
                 }
-            }            
-        }
-        else if(hitinfo.transform.tag =="door")
-        {
-            Debug.Log("잠겨있습니다.");
-        }
-               
+            }
+            else if (hitinfo.transform.tag == "key")          //집을 물건이 key태그를 가질경우
+            {
+                if (pickupActivated)
+                {
+                    if (hitinfo.transform != null)
+                    {
+
+                        inHand = hitinfo.transform.gameObject;
+                        Debug.Log("획득했습니다.");
+                        /*Destroy(hitinfo.transform.gameObject);
+                        InfoDisappear();*/
+
+                        inHand.transform.parent = this.transform;
+                        got = true;
+                        inHand.GetComponent<Rigidbody>().useGravity = false;
+                        inHand.GetComponent<BoxCollider>().isTrigger = true;
+                        inHand.transform.localPosition = new Vector3(1, 0, 1);
+                        inHand.transform.localRotation = new Quaternion(0, 0, 0, 0);
+                    }
+                }
+            }
+        }       
     }
     private void CanDrop()
     {
@@ -104,9 +119,12 @@ public class ActionController : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.forward,  //transform.forward = transform.TransformDirection(Vector3,forward)
                 out hitinfo, range, layerMask1)) //광선쏘기(플레이어의위치,플레이어가 바라보는 z축방향, 충돌체정보, 사정거리,레이어마스크)
         {
-            if (hitinfo.transform.tag == "item")
+           if(got == false)
             {
-                IteminfoAppear();
+                if (hitinfo.transform.tag == "item" || hitinfo.transform.tag == "key")
+                {
+                    IteminfoAppear();
+                }
             }
         }
         else if(Physics.Raycast(transform.position, transform.forward,
@@ -138,9 +156,16 @@ public class ActionController : MonoBehaviour
     }
     private void UseItem()
     {
-        if (this.transform.GetChild(0).gameObject != null)
+        if (inHand != null)
         {
-
+            if(inHand.transform.tag == "key" && hitinfo.transform.tag == "door")
+            {
+                Debug.Log("열쇠가 있고 문 가까이 있어");
+                GameObject.FindWithTag("door").GetComponent<DoorController>().locked = false;
+                Debug.Log("열쇠를 사용하였습니다.");
+                Destroy(inHand);
+                got = false;
+            }
         }
         else actionText.text = "손에 아이템이 읎어요";
     }
